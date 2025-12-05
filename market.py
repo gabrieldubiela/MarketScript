@@ -85,10 +85,9 @@ def bitcoin():
     return data
 
 def eua_insterest():
-    # Use environment variable FRED_API_KEY if available, else fallback to empty string (will raise if missing)
+
     fred_key = os.getenv('FRED_API_KEY', '')
-    fred = Fred(api_key=fred_key) 
-    # correct series name to 'FEDFUNDS' (standard Fed funds effective rate)
+    fred = Fred(api_key=fred_key)
     fed_diario = fred.get_series('FEDFUNDS', observation_start=get_date(), observation_end=datetime.today())
     fed_diario = fed_diario.sort_index()
     fed_diario.index = pd.to_datetime(fed_diario.index)
@@ -199,9 +198,7 @@ def plot_comparativo(df):
 if __name__ == "__main__":
     df = get_all_data()
     
-    # Salvar CSV
     df.to_csv("comparativo_10_anos.csv", index_label="Data")
     print("Dados salvos em comparativo_10_anos.csv\n")
-    
-    # Gerar gráfico
+
     plot_comparativo(df)
